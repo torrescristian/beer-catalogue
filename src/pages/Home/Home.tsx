@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Container,
   List,
@@ -26,22 +25,29 @@ export default function Home() {
       </Box>
       <List>
         {beers.map((b) => (
-          <ListItem alignItems="flex-start" key={b.id}>
-            <ListItemAvatar>
-              <Avatar
+          <ListItem alignItems='flex-start' sx={{ columnGap: 2 }} key={b.id}>
+            <ListItemAvatar sx={{ display: 'flex', flexDirection: 'column' }}>
+              <img
                 alt="beer image"
                 src={b.image_url}
-                sx={{ width: 'auto', maxWidth: '25px', height: 'auto', borderRadius: 0, objectFit: 'contain' }}
+                style={{
+                  borderRadius: 0,
+                  height: 'auto',
+                  maxHeight: '100px',
+                  objectFit: 'scale-down',
+                  width: 'auto',
+                }}
               />
             </ListItemAvatar>
             <ListItemText
+              sx={{ marginTop: 2 }}
               primary={
-                <Typography sx={{ display: 'inline' }} color="text.primary">
+                <Typography color="text.primary">
                   {b.name}
                 </Typography>
               }
               secondary={
-                <Typography sx={{ display: 'inline' }} color="text.primary">
+                <Typography color="text.secondary">
                   {b.tagline}
                 </Typography>
               }
