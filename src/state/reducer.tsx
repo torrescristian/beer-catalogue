@@ -1,4 +1,4 @@
-import { LOAD_MORE, SET_BEER_NAME, SET_LAST_PAGE_FOUND } from "./actions";
+import { LOAD_MORE, SET_BEER_NAME, SET_LAST_PAGE_FOUND } from './actions';
 
 export interface IState {
   beerName: string;

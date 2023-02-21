@@ -1,6 +1,10 @@
 import { useEffect } from "react";
+import { loadMore } from "../../../state/actions";
+import { useSearchDispatch } from "../../../state/context";
 
-export default function useInfinityScroll(loadMore: () => void) {
+export default function useInfinityScroll() {
+  const dispatch = useSearchDispatch()
+
   useEffect(
     function infiniteScroll() {
       const handleScroll = () => {
@@ -9,7 +13,7 @@ export default function useInfinityScroll(loadMore: () => void) {
         const { scrollTop } = document.documentElement;
 
         if (innerHeight + scrollTop >= scrollHeight) {
-          loadMore();
+          dispatch(loadMore());
         }
       };
 

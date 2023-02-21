@@ -1,14 +1,10 @@
 import { createContext, ReactNode, useContext, useReducer } from 'react';
 import { initialState, IState, reducer } from './reducer';
 
-
-// Path: src/state/context.ts
-
 // create all necessary elements to move the search state to the context
 const SearchStateContext = createContext<IState | undefined>(undefined);
 const SearchDispatchContext = createContext<any | undefined>(undefined);
 
-// Path: src/state/context.ts
 // create the provider component
 const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -22,7 +18,6 @@ const SearchProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Path: src/state/context.ts
 // create the custom hooks to access the context
 const useSearchState = () => {
   const context = useContext(SearchStateContext);
@@ -40,6 +35,5 @@ const useSearchDispatch = () => {
   return context;
 };
 
-// Path: src/state/context.ts
 // export the provider and the custom hooks
 export { SearchProvider, useSearchState, useSearchDispatch };

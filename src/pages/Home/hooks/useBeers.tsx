@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { setLastPageFound } from '../../../state/actions';
+import { useSearchDispatch, useSearchState } from '../../../state/context';
 
 interface IBeer {
   id: number;
@@ -7,8 +9,10 @@ interface IBeer {
   image_url: string;
 }
 
-export default function useBeers(query: string, setLastPageFound: (lastPageFound: boolean) => void, lastPageFound: boolean) {
+export default function useBeers(query: string) {
   const [beers, setBeers] = useState<IBeer[]>([]);
+  const { lastPageFound } = useSearchState();
+  const dispatch = useSearchDispatch();
 
   useEffect(
     function filterByQuery() {
@@ -23,7 +27,7 @@ export default function useBeers(query: string, setLastPageFound: (lastPageFound
       const perPage = queryUrl.searchParams.get('per_page') || '10';
 
       if (page === '1') {
-        setLastPageFound(false);
+        dispatch(setLastPageFound(false));
       }
 
       if (page !== '1' && lastPageFound) {
@@ -34,7 +38,7 @@ export default function useBeers(query: string, setLastPageFound: (lastPageFound
         .then((res) => res.json())
         .then((data) => {
           if (data.length < +perPage) {
-            setLastPageFound(true);
+            dispatch(setLastPageFound(true));
           }
 
           if (page !== '1') {

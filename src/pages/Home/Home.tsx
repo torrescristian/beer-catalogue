@@ -15,10 +15,10 @@ import useSearch from './hooks/useSearch';
 export default function Home() {
   const { inputProps, recentSearchesProps, query } = useSearch();
 
-  const beers = useBeers(query, recentSearchesProps.setLastPageFound, recentSearchesProps.lastPageFound);
+  const beers = useBeers(query);
 
   return (
-    <div>
+    <main>
       <Box>
         <TextField variant="outlined" {...inputProps} />
         <RecentSearches {...recentSearchesProps} />
@@ -48,6 +48,6 @@ export default function Home() {
           </ListItem>
         ))}
       </List>
-    </div>
+    </main>
   );
 }

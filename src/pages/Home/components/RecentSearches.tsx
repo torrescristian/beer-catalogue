@@ -1,23 +1,25 @@
 import { List, ListItem, ListItemText } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
+import { useSearchDispatch } from '../../../state/context';
+import { setBeerName } from '../../../state/actions';
 
 type IProps = {
   recentSearches: string[];
   hasFocus: boolean;
-  setBeerName: (beerName: string) => void;
   setHasFocus: (hasFocus: boolean) => void;
 };
 
 export default function RecentSearches({
   hasFocus,
   recentSearches,
-  setBeerName,
   setHasFocus,
 }: IProps) {
+  const dispatch = useSearchDispatch();
+  
   if (!hasFocus || !recentSearches.length) return null;
 
   const handleClick = (beerName: string) => () => {
-    setBeerName(beerName);
+    dispatch(setBeerName(beerName));
     setHasFocus(false);
   };
 
