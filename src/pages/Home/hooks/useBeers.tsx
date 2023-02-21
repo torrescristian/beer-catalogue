@@ -7,8 +7,7 @@ interface IBeer {
   image_url: string;
 }
 
-export default function useBeers(query: string) {
-  const [lastPageFound, setLastPageFound] = useState(false);
+export default function useBeers(query: string, setLastPageFound: (lastPageFound: boolean) => void, lastPageFound: boolean) {
   const [beers, setBeers] = useState<IBeer[]>([]);
 
   useEffect(
@@ -16,9 +15,12 @@ export default function useBeers(query: string) {
       const controller = new AbortController();
       const { signal } = controller;
 
-      const url = new URL(query);
-      const page = url.searchParams.get('page') || '';
-      const perPage = url.searchParams.get('per_page') || '10';
+      if (!query) return;
+
+      const queryUrl = new URL(query);
+
+      const page = queryUrl.searchParams.get('page') || '';
+      const perPage = queryUrl.searchParams.get('per_page') || '10';
 
       if (page === '1') {
         setLastPageFound(false);

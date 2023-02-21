@@ -8,20 +8,17 @@ export default function useSearch() {
     JSON.parse(localStorage.getItem('recentSearches') || '[]')
   );
   const [hasFocus, setHasFocus] = useState(false);
-  const { query, setBeerName, loadMore } = useFetchQuery();
+  const { query, setBeerName, loadMore, beerName, setLastPageFound, lastPageFound } = useFetchQuery();
+  const suggestions = recentSearches.filter((s) => s.includes(beerName));
 
   useInfinityScroll(loadMore);
 
-  const handleChangeSearch = useDebouncedCallback(
+  const debouncedRecentSearchesUpdate = useDebouncedCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value.trim();
 
-      if (!value) return;
-
       setRecentSearches((prev) => {
         // if the value is already in the array, move the value to the top of the array and return the array
-        setBeerName(value);
-
         if (prev.includes(value)) {
           const newPrev = prev.filter((p) => p !== value);
           return [value, ...newPrev];
@@ -35,12 +32,21 @@ export default function useSearch() {
     1000
   );
 
+  const handleChangeSearch =
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.trim();
+
+      setBeerName(value || '');
+
+      if (!value) {
+        return;
+      };
+
+      debouncedRecentSearchesUpdate(e);
+    };
+
   const handleFocusSearch = () => {
     setHasFocus(true);
-  };
-
-  const handleBlurSearch = () => {
-    setHasFocus(false);
   };
 
   useEffect(() => {
@@ -49,14 +55,19 @@ export default function useSearch() {
 
   return {
     inputProps: {
-      onBlur: handleBlurSearch,
       onChange: handleChangeSearch,
       onFocus: handleFocusSearch,
+      value: beerName, // this is causing the input to be uncontrolled
     },
     recentSearchesProps: {
-      recentSearches,
-      hasFocus: hasFocus,
+      recentSearches: suggestions,
+      hasFocus,
+      setBeerName,
+      setHasFocus,
+      setLastPageFound,
+      lastPageFound,
     },
     query,
+    beerName,
   };
 }

@@ -9,7 +9,6 @@ export default function useInfinityScroll(loadMore: () => void) {
         const { scrollTop } = document.documentElement;
 
         if (innerHeight + scrollTop >= scrollHeight) {
-          // TODO: limit load more data to 1 time per second
           loadMore();
         }
       };
