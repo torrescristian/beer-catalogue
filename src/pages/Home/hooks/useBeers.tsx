@@ -43,10 +43,16 @@ export default function useBeers(query: string) {
 
           if (page !== '1') {
             setBeers((prev) => [...prev, ...data]);
-            return; 
+            return;
           }
 
-          setBeers(data)
+          setBeers(data);
+        })
+        .catch((err) => {
+          if (err.name === 'AbortError') {
+            return;
+          }
+          console.error(err);
         });
 
       return () => {

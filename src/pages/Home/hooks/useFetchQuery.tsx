@@ -15,10 +15,8 @@ const createQuery = ({ beerName, page, perPage }: IState): string => {
   return url.toString();
 };
 
-const loadQueryParams = ({ beerName, page, perPage }: IState) => {
+const loadQueryParams = ({ beerName }: IState) => {
   const urlParams = new URLSearchParams(window.location.search);
-  urlParams.set('page', page.toString());
-  urlParams.set('per_page', perPage.toString());
   if (beerName) {
     urlParams.set('beer_name', beerName);
   } else {
@@ -28,13 +26,14 @@ const loadQueryParams = ({ beerName, page, perPage }: IState) => {
   window.history.pushState(
     {},
     '',
-    `${window.location.pathname}?${urlParams.toString()}`
+    urlParams.toString()
+      ? `${window.location.pathname}?${urlParams.toString()}`
+      : window.location.pathname
   );
 };
 
 export default function useFetchQuery() {
   const state = useSearchState();
-``
   const [query, setQuery] = useState(() => createQuery(initialState));
 
   const debouncedQueryCreation = useDebouncedCallback((_state) => {

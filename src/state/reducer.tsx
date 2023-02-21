@@ -29,7 +29,7 @@ const urlParams = new URLSearchParams(window.location.search);
 
 export const initialState = {
   beerName: urlParams.get('beer_name') || '',
-  page: Number(urlParams.get('page') || 1),
-  perPage: Number(urlParams.get('per_page') || 10),
+  page: 1,
+  perPage: 10,
   lastPageFound: false,
 };

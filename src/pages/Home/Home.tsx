@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Container,
   List,
   ListItem,
   ListItemAvatar,
@@ -18,9 +19,9 @@ export default function Home() {
   const beers = useBeers(query);
 
   return (
-    <main>
+    <Container sx={{ height: '100%', p: 3 }}>
       <Box>
-        <TextField variant="outlined" {...inputProps} />
+        <TextField fullWidth variant="outlined" {...inputProps} />
         <RecentSearches {...recentSearchesProps} />
       </Box>
       <List>
@@ -30,7 +31,7 @@ export default function Home() {
               <Avatar
                 alt="beer image"
                 src={b.image_url}
-                sx={{ width: '100%', height: '100px', borderRadius: 0 }}
+                sx={{ width: 'auto', maxWidth: '25px', height: 'auto', borderRadius: 0, objectFit: 'contain' }}
               />
             </ListItemAvatar>
             <ListItemText
@@ -48,6 +49,6 @@ export default function Home() {
           </ListItem>
         ))}
       </List>
-    </main>
+    </Container>
   );
 }

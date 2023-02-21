@@ -15,7 +15,7 @@ export default function RecentSearches({
   setHasFocus,
 }: IProps) {
   const dispatch = useSearchDispatch();
-  
+
   if (!hasFocus || !recentSearches.length) return null;
 
   const handleClick = (beerName: string) => () => {
@@ -26,7 +26,14 @@ export default function RecentSearches({
   return (
     <ClickAwayListener onClickAway={() => setHasFocus(false)}>
       <List
-        sx={{ backgroundColor: 'seagreen', position: 'absolute', zIndex: 1 }}
+        sx={{
+          backgroundColor: (theme) => theme.palette.primary.main,
+          position: 'absolute',
+          zIndex: 1,
+          borderRadius: 1,
+          mt: 1,
+          width: '80%',
+        }}
       >
         {recentSearches.map((beerName) => (
           <ListItem key={beerName}>
