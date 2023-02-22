@@ -24,7 +24,6 @@ export default function RecentSearches({
   };
 
   return (
-    <ClickAwayListener onClickAway={() => setHasFocus(false)}>
       <List
         sx={{
           backgroundColor: (theme) => theme.palette.primary.main,
@@ -41,6 +40,5 @@ export default function RecentSearches({
           </ListItem>
         ))}
       </List>
-    </ClickAwayListener>
   );
 }

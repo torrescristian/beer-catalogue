@@ -1,5 +1,6 @@
 import {
   Box,
+  ClickAwayListener,
   Container,
   List,
   ListItem,
@@ -19,13 +20,17 @@ export default function Home() {
 
   return (
     <Container sx={{ height: '100%', p: 3 }}>
-      <Box>
-        <TextField fullWidth variant="outlined" {...inputProps} />
-        <RecentSearches {...recentSearchesProps} />
-      </Box>
+      <ClickAwayListener
+        onClickAway={() => recentSearchesProps.setHasFocus(false)}
+      >
+        <Box>
+          <TextField fullWidth variant="outlined" {...inputProps} />
+          <RecentSearches {...recentSearchesProps} />
+        </Box>
+      </ClickAwayListener>
       <List>
         {beers.map((b) => (
-          <ListItem alignItems='flex-start' sx={{ columnGap: 2 }} key={b.id}>
+          <ListItem alignItems="flex-start" sx={{ columnGap: 2 }} key={b.id}>
             <ListItemAvatar sx={{ display: 'flex', flexDirection: 'column' }}>
               <img
                 alt="beer image"
@@ -37,19 +42,14 @@ export default function Home() {
                   objectFit: 'scale-down',
                   width: 'auto',
                 }}
+                loading="lazy"
               />
             </ListItemAvatar>
             <ListItemText
               sx={{ marginTop: 2 }}
-              primary={
-                <Typography color="text.primary">
-                  {b.name}
-                </Typography>
-              }
+              primary={<Typography color="text.primary">{b.name}</Typography>}
               secondary={
-                <Typography color="text.secondary">
-                  {b.tagline}
-                </Typography>
+                <Typography color="text.secondary">{b.tagline}</Typography>
               }
             />
           </ListItem>
