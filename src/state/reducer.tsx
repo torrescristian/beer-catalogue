@@ -1,10 +1,11 @@
-import { LOAD_MORE, SET_BEER_NAME, SET_LAST_PAGE_FOUND } from './actions';
+import { LOAD_MORE, SET_BEER_NAME, SET_LAST_PAGE_FOUND, SET_SEARCH_FOCUSED } from './actions';
 
 export interface IState {
   beerName: string;
   page: number;
   perPage: number;
   lastPageFound: boolean;
+  searchFocused: boolean;
 }
 
 // create the reducer function
@@ -19,6 +20,9 @@ export const reducer = (state: IState, action: any): IState => {
     case SET_LAST_PAGE_FOUND: {
       return { ...state, lastPageFound: action.payload };
     }
+    case SET_SEARCH_FOCUSED: {
+      return { ...state, searchFocused: action.payload };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -32,4 +36,5 @@ export const initialState = {
   page: 1,
   perPage: 10,
   lastPageFound: false,
+  searchFocused: false,
 };

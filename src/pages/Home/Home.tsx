@@ -9,23 +9,25 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { setSearchFocused } from '../../state/actions';
+import { useSearchDispatch } from '../../state/context';
 import RecentSearches from './components/RecentSearches';
 import useBeers from './hooks/useBeers';
 import useSearch from './hooks/useSearch';
 
 export default function Home() {
-  const { inputProps, recentSearchesProps, query } = useSearch();
-
+  const { inputProps, recentSearchesStack, query } = useSearch();
+  const dispatch = useSearchDispatch();
   const beers = useBeers(query);
 
   return (
     <Container sx={{ height: '100%', p: 3 }}>
       <ClickAwayListener
-        onClickAway={() => recentSearchesProps.setHasFocus(false)}
+        onClickAway={() => dispatch(setSearchFocused(false))}
       >
         <Box>
           <TextField fullWidth variant="outlined" {...inputProps} />
-          <RecentSearches {...recentSearchesProps} />
+          <RecentSearches list={recentSearchesStack} />
         </Box>
       </ClickAwayListener>
       <List>
